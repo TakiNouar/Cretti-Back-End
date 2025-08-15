@@ -46,13 +46,27 @@ const errorHandlerMiddleware = require("./middleWare/errorHandler");
 app.use(helmet()); // Apply security headers
 app.use(express.json({ limit: "25kb" })); // Parse JSON requests (max 25kb)
 
+const allowedOrigins = process.env.CORS_ORIGIN?.split(",") ?? ["*"];
+
 app.use(
   cors({
-        origin: process.env.CORS_ORIGIN?.split(",") ?? "*",
-    methods: ["GET", "POST"],       // allow only needed methods
-    allowedHeaders: ["Content-Type"], // allow only needed headers
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    methods: ["GET", "POST", "OPTIONS"],  // allow preflight
+    allowedHeaders: ["Content-Type"],     // allow Content-Type header
   })
 );
+
+// Handle OPTIONS preflight requests explicitly (optional but recommended)
+app.options("*", cors());
+
 
 app.use(morgan("tiny")); // Log HTTP requests
 
