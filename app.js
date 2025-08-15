@@ -48,7 +48,9 @@ app.use(express.json({ limit: "25kb" })); // Parse JSON requests (max 25kb)
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN.replace(/\/$/, ""),
+        origin: process.env.CORS_ORIGIN?.split(",") ?? "*",
+    methods: ["GET", "POST"],       // allow only needed methods
+    allowedHeaders: ["Content-Type"], // allow only needed headers
   })
 );
 
