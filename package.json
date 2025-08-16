@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-
     "start": "node app.js",
-
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,9 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-
+    "@getbrevo/brevo": "^3.0.1",
     "@sendgrid/mail": "^8.1.5",
-
     "api-query-params": "^6.0.1",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
