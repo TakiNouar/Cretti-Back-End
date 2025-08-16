@@ -52,6 +52,7 @@ app.use(
   })
 );
 
+
 app.use(morgan("tiny")); // Log HTTP requests
 
 // ============================================================================
@@ -104,7 +105,7 @@ app.use(errorHandlerMiddleware); // Handle all other errors
 // SERVER STARTUP (Lines 51-54)
 // Search for: "listen", "port", "PORT" to find server startup code
 // ============================================================================
-const port = Number(process.env.PORT) || 5000; // Get port from env or default to 5000
+const port = process.env.PORT || 5000  // Get port from env or default to 5000
 app.listen(port, () => {
   console.log(`server listening to ${port}...`);
 });
