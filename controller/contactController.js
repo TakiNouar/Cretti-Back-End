@@ -3,7 +3,10 @@ const { sendOwnerEmail, sendUserConfirmation } = require("../lib/mailer.js");
 const { appendToSheet } = require("../lib/googleSheet.js");
 
 const contact = async (req, res) => {
+  console.log(req.body);
   try {
+    console.log("Admin email recipient:", process.env.MAIL_TO);
+
     // 1) Validate input
     const data = parseContact(req.body);
 
